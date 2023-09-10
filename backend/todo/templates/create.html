@@ -90,19 +90,21 @@
                 {% comment %} <input type="text" name="title" class="form-control" id="inputEmail4" placeholder="Email"> {% endcomment %}
               </div>
               <div class="form-group col-md-6">
-                {{ form.title }}
+               
                 <label for="inputPassword4">end time</label>
-                {{ form.date }}
+                {{ form.created_date }}
                 {% comment %} <input type="date" name="endtime" class="form-control" id="inputPassword4" placeholder="Password"> {% endcomment %}
               </div>
               <div class="form-group col-md-6">
                 <label for="inputPassword4">end time</label>
-                <input type="time" name="endtime" class="form-control" id="inputPassword4" placeholder="Password">
+                {{ form.due_date }}
+                {% comment %} <input type="time" name="endtime" class="form-control" id="inputPassword4" placeholder="Password"> {% endcomment %}
               </div>
             </div>
             <div class="form-group">
-              <label for="inputAddress">priority</label>
-              <input type="text" name="priority" class="form-control" id="inputAddress" placeholder="1234 Main St">
+              <label for="inputAddress">Done</label>
+              {{ form.done }}
+              {% comment %} <input type="text" name="priority" class="form-control" id="inputAddress" placeholder="1234 Main St"> {% endcomment %}
             </div>
 
 
@@ -115,14 +117,7 @@
               </div>
      
             </div>
-            <div class="form-group">
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="gridCheck">
-                <label class="form-check-label" for="gridCheck">
-                  done
-                </label>
-              </div>
-            </div>
+
             <button type="submit" class="btn btn-primary">send</button>
           </form>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
