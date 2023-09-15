@@ -74,8 +74,8 @@
     updates
     <div class="row">
         <div>
-          <form method="POST" class="post-form" action="/update/{{todoEdit.id}}">
-            <input type="hidden" name="id" id="id" value="{{todoEdit.id}}"/>
+          <form method="POST" class="post-form" action="/update/{{todoEdit.id}}/">
+            {% comment %} <input type="hidden" name="id" id="id_id" value="{{todoEdit.id}}"/> {% endcomment %}
             {% csrf_token %}
 
             <div class="form-row">

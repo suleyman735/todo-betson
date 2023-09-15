@@ -61,10 +61,16 @@ def update(request, roll):
     if form.is_valid():  
         form.save() 
         print(form) 
-        return redirect("/")  
+        return redirect("/") 
+    else:
+        print(form.errors) 
     return render(request, 'edit.html', {'todoEdit': todoEdit})
 
 def destroy(request, id):  
     todoItem = ToDoItem.objects.get(id=id)  
     todoItem.delete()  
     return redirect("/")
+
+def login(request):  
+    # todoEdit = ToDoItem.objects.get(id=id)  
+    return render(request,'login.html',) 
