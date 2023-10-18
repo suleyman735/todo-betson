@@ -9,11 +9,11 @@ from django.utils import timezone
 class ToDoItem(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField(null=True, blank=True)
-    created_date = models.DateField()
-    due_date = models.DateField()
-    
-    done = models.BooleanField()
+    created_date = models.DateTimeField('Created',)
 
+    due_date = models.DateTimeField('Will Finish',)
+    
+    done = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"{self.title}: due {self.due_date}"
+        return self.title

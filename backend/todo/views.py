@@ -1,5 +1,7 @@
+from django.db import IntegrityError
 from django.shortcuts import redirect, render
 from .models import *
+from datetime import datetime
 
 from .forms import TodoForm
 
@@ -14,26 +16,22 @@ def index(request):
                'todoRunning':todoRunning}
     return render(request, 'index.html',context)
 
-
-
-
 def create(request):
-    if request.method == "POST":
-        form = TodoForm(request.POST)
-        print(form)
-        if form.is_valid():
-            try:
-    
-                form.save()
-      
-            except:
-                print('e')
-    else:
-        form = TodoForm()
-    
-    return render(request, 'create.html',{'form':form})
+    try:
+        if request.method =='POST':
+            title = request.POST['title']
+            description = request.POST['description']
+            created_date = request.POST['created_date']
+            # strDatetime = datetime.strptime(created_date,'%Y-%m-%dT%H:%M')
+            due_date = request.POST['due_date']
+            is_checked = request.POST.get('is_checked')=='on'
+            dataSave = ToDoItem(title=title, description=description, created_date=created_date, due_date=due_date, done=is_checked)
+            dataSave.save()
+            return render(request,'create.html')
+    except IntegrityError as e:
 
-
+        print(e)
+    return render(request,'create.html')
 def edit(request, id):  
     todoEdit = ToDoItem.objects.get(id=id)  
     return render(request,'edit.html', {'todoEdit':todoEdit}) 
