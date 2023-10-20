@@ -16,7 +16,7 @@ def loginIn(request):
     if request.method =="POST":
         username = request.POST['username']
         password = request.POST['password']
-        print(username)
+        print(username,password)
 
         user = authenticate(username=username, password=password)
         print(user)
@@ -64,6 +64,7 @@ def signIn(request):
             password = request.POST['password']
             user = User.objects.create_user(username=username,email=email,password=make_password(password))
             user.save()
+            print(username,password)
 
             return redirect('login')
             
