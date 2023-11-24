@@ -4,11 +4,16 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 
 
-# Create your models here.
+# Create your models here.]
+
+class UserCreating(models.Model):
+    username = models.CharField(max_length=50)
+    email = models.EmailField()
+    password = models.CharField(max_length=100) 
 
 
 class ToDoItem(models.Model):
-    user = models.ForeignKey(User,on_delete=models.SET_NULL,null=True)
+    # user = models.ForeignKey(User,on_delete=models.SET_NULL,null=True)
     title = models.CharField(max_length=100)
     description = models.TextField(null=True, blank=True)
     created_date = models.DateTimeField('Created',)

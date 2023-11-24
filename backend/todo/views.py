@@ -8,6 +8,77 @@ from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
+from rest_framework import status
+
+from rest_framework import generics
+from .serializers import UserSerializer,ToDoItemSerializer
+from rest_framework.views import APIView
+from rest_framework.decorators import api_view
+from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
+
+
+# @login_required(login_url='/login/')
+class UserListCreateView(generics.ListCreateAPIView):
+    queryset = UserCreating.objects.all()
+    serializer_class = UserSerializer
+    
+class LoginUser(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        username = request.data.get('username')
+        password = request.data.get('password')
+
+        user = authenticate(request, username=username, password=password)
+
+        if user:
+            login(request, user)
+            serializer = UserSerializer(user)
+            return Response(serializer.data)
+        else:
+            return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+    
+
+# Todo GET view api  
+
+@api_view(['GET','POST'])  
+def todo_list(request):
+    if request.method == 'GET':
+        todolist = ToDoItem.objects.all()
+        serializer = ToDoItemSerializer(todolist,many=True)
+        return Response(serializer.data)
+    
+    if request.method =='POST':
+        serializer = ToDoItemSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors)
+        
+
+
+# @api_view(['POST'])  
+# def todo_create(request):
+#     serializer = ToDoItemSerializer(data=request.data)
+#     if serializer.is_valid():
+#         serializer.save()
+#         return Response(serializer.data)
+#     else:
+#         return Response(serializer.errors)
+    
+    
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -107,6 +178,7 @@ def logout_view(request):
 
 @login_required(login_url='/login/')
 def index(request):
+ 
     todoComplete = ToDoItem.objects.filter(done="True",user=request.user)
     todoRunning = ToDoItem.objects.filter(done="False",user=request.user)
 
